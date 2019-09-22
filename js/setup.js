@@ -12,7 +12,7 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template')
 
 var WIZARD_NAME = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 var WIZARD_SURNAME = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var COAT_COLOR = ['rgb (101, 137, 164)', 'rgb (241, 43, 107)', 'rgb (146, 100, 161)', 'rgb (56, 159, 117)', 'rgb (215, 210, 55)', 'rgb (0, 0, 0)'];
+var COAT_COLOR = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
 
 var getRandomElement = function (arr) {
@@ -22,17 +22,17 @@ var getRandomElement = function (arr) {
 var createWizard = function (value) {
   var wizard = [];
 
-  for (var i = 0; i < value.length; i++) {
+  for (var i = 0; i < value; i++) {
     var nameWizard = getRandomElement(WIZARD_NAME);
     var surnameWizard = getRandomElement(WIZARD_SURNAME);
     var colorCoat = getRandomElement(COAT_COLOR);
     var colorEyes = getRandomElement(EYES_COLOR);
 
-    wizard[i] = {
-      name: WIZARD_NAME[nameWizard] + '' + WIZARD_SURNAME[surnameWizard],
+    wizard.push({
+      name: WIZARD_NAME[nameWizard] + ' ' + WIZARD_SURNAME[surnameWizard],
       coatColor: COAT_COLOR[colorCoat],
       eyesColor: EYES_COLOR[colorEyes]
-    };
+    });
   }
 
   return wizard;
