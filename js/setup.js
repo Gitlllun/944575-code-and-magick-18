@@ -51,9 +51,14 @@ var renderWizard = function (wizard) {
 var wizards = createWizard(numberWizard);
 
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < wizards.length; i++) {
-  fragment.appendChild(renderWizard(wizards[i]));
-}
-similarListElement.appendChild(fragment);
+
+var createFragment = function (arr) {
+  for (var i = 0; i < arr.length; i++) {
+    fragment.appendChild(renderWizard(wizards[i]));
+  }
+  similarListElement.appendChild(fragment);
+};
+
+createFragment(wizards);
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
