@@ -64,8 +64,7 @@ createFragment(wizards);
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
 
-// --------------------------------------------------------------------
-
+// Работа с событиями
 
 var setup = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
@@ -129,7 +128,6 @@ userNameInput.addEventListener('invalid', function (evt) {
 var WIZARD_COAT = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var WIZARD_EYES = ['black', 'red', 'blue', 'yellow', 'green'];
 var WIZARD_FIREBALL = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
-
 
 var getRandomColor = function (color) {
   var randomColor = color[getRandomElement(color)];
