@@ -63,3 +63,92 @@ var createFragment = function (arr) {
 createFragment(wizards);
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
+
+// --------------------------------------------------------------------
+
+
+var setup = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+  }
+};
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function () {
+  setup.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closePopup();
+  }
+});
+
+var userNameInput = setup.querySelector('.setup-user-name');
+
+userNameInput.addEventListener('invalid', function (evt) {
+  evt.preventDefault();
+
+  if (userNameInput.validity.tooShort) {
+    userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+  } else if (userNameInput.validity.tooLong) {
+    userNameInput.setCustomValidity('Имя не должно превышать 25-ти символов');
+  } else if (userNameInput.validity.valueMissing) {
+    userNameInput.setCustomValidity('Обязательное поле');
+  } else {
+    userNameInput.setCustomValidity('');
+  }
+});
+
+var WIZARD_COAT = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+var WIZARD_EYES = ['black', 'red', 'blue', 'yellow', 'green'];
+var WIZARD_FIREBALL = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+
+
+var getRandomColor = function (color) {
+  var randomColor = color[getRandomElement(color)];
+  return randomColor;
+};
+
+var setupWizardAppearance = document.querySelector('.setup-wizard-appearance');
+var wizardColorCoat = setupWizardAppearance.querySelector('.wizard-coat');
+var wizardColorEyes = setupWizardAppearance.querySelector('.wizard-eyes');
+var fireballColor = document.querySelector('.setup-fireball-wrap');
+
+wizardColorCoat.addEventListener('click', function () {
+  wizardColorCoat.style.fill = getRandomColor(WIZARD_COAT);
+});
+
+wizardColorEyes.addEventListener('click', function () {
+  wizardColorEyes.style.fill = getRandomColor(WIZARD_EYES);
+});
+
+fireballColor.addEventListener('click', function () {
+  fireballColor.style.background = getRandomColor(WIZARD_FIREBALL);
+});
