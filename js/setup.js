@@ -3,7 +3,6 @@
 var numberWizard = 4;
 
 var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
 
 var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template')
@@ -89,22 +88,26 @@ var closePopup = function () {
   document.removeEventListener('keydown', onPopupEscPress);
 };
 
-setupOpen.addEventListener('click', function () {
+setupOpen.addEventListener('click', function (evt) {
+  evt.preventDefault();
   openPopup();
 });
 
 setupOpen.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
+    evt.preventDefault();
     openPopup();
   }
 });
 
-setupClose.addEventListener('click', function () {
+setupClose.addEventListener('click', function (evt) {
+  evt.preventDefault();
   closePopup();
 });
 
 setupClose.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
+    evt.preventDefault();
     closePopup();
   }
 });
@@ -139,21 +142,27 @@ var wizardColorCoat = setupWizardAppearance.querySelector('.wizard-coat');
 var wizardColorEyes = setupWizardAppearance.querySelector('.wizard-eyes');
 var fireballColor = document.querySelector('.setup-fireball-wrap');
 
-wizardColorCoat.addEventListener('click', function () {
+wizardColorCoat.addEventListener('click', function (evt) {
+  evt.preventDefault();
+
   var randomCoat = getRandomColor(WIZARD_COAT);
 
   wizardColorCoat.style.fill = randomCoat;
   setupWizardAppearance.querySelector('.input-coat').value = randomCoat;
 });
 
-wizardColorEyes.addEventListener('click', function () {
+wizardColorEyes.addEventListener('click', function (evt) {
+  evt.preventDefault();
+
   var randomEyes = getRandomColor(WIZARD_EYES);
 
   wizardColorEyes.style.fill = randomEyes;
   setupWizardAppearance.querySelector('.input-eyes').value = randomEyes;
 });
 
-fireballColor.addEventListener('click', function () {
+fireballColor.addEventListener('click', function (evt) {
+  evt.preventDefault();
+
   var randomFireball = getRandomColor(WIZARD_FIREBALL);
 
   fireballColor.style.background = randomFireball;
