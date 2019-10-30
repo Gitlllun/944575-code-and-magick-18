@@ -1,62 +1,62 @@
 'use strict';
 
-var CLOUD_WIDTH = 420;
-var CLOUD_HEIGHT = 270;
-var CLOUD_X = 100;
-var CLOUD_Y = 10;
-var GAP = 10;
-var GAP_X = 50;
-var GAP_Y = 240;
-var TEXT_GAP = 250;
-var BAR_WIDTH = 40;
-var BAR_HEIGHT = -150;
+// 3. УЧЕБНЫЙ ПРОЕКТ: ХОЛСТ
 
-var renderCloud = function (ctx, x, y, color) {
+var CLOUD_WIDTH = 420;                  // Ширина облака
+var CLOUD_HEIGHT = 270;                 // Высота облака
+var CLOUD_X = 100;                      // Отступ облака по X
+var CLOUD_Y = 10;                       // Отступ облака по Y
+var CLOUD_COLOR = '#fff'                // Цвет облака
+var CLOUD_SHADOW = 'rgba(0, 0, 0, 0.7)' // Цвет тени облака
+var GAP = 10;                           // Отступ
+var TEXT_X = 130;                       // Отступ текста по X
+var TEXT_Y = 40;                        // Отступ текста по Y
+var TEXT_NAME_Y = 250;                  // Отступ имён по Y
+var TEXT_COLOR = '#000'                 // Цвет текста
+var BAR_WIDTH = 40;                     // Ширина гистограммы
+var BAR_HEIGHT = 150;                   // Высота гистограммы 
+var BAR_GAP = 50;                       // Отступ между гистаграммами
+var BAR_X = BAR_WIDTH + BAR_GAP;        // Отступ гистаграммы по X
+var BAR_Y = 240;                        // Отсутп гистограммы по Y
+
+// Отрисовка облака
+var renderCloud = function(ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
   ctx.strokeRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
 };
 
-var getMaxElement = function (arr) {
-  var maxElement = arr[0];
-
-  for (var i = 1; i < arr.length; i++) {
-    if (arr[i] > maxElement) {
-      maxElement = arr[i];
-    }
-  }
-
-  return maxElement;
-};
-
-window.renderStatistics = function (ctx, players, times) {
-  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
-  renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
+window.renderStatistics = function(ctx, names, times) {
+  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, CLOUD_SHADOW); // Тень облака статистики
+  renderCloud(ctx, CLOUD_X, CLOUD_Y, CLOUD_COLOR); // Облако статистики
 
   ctx.font = '16px PT Mono';
-  ctx.fillStyle = '#000';
+  ctx.fillStyle = TEXT_COLOR;
   ctx.textBaseline = 'hanging';
-  ctx.fillText('Ура вы победили!', CLOUD_X + GAP * 2, CLOUD_Y + GAP * 2);
-  ctx.fillText('Cписок результатов:', CLOUD_X + GAP * 2, CLOUD_Y + GAP * 4);
+  ctx.fillText('Ура вы победили!', TEXT_X - GAP, TEXT_Y - GAP);
+  ctx.fillText('Cписок результатов:', TEXT_X - GAP, TEXT_Y + GAP);
 
-  var maxTime = getMaxElement(times);
+  // Поиск максимального времени
+  var getMaxTime = function() {
+    return Math.max(...times);
+  };
 
-  for (var i = 0; i < players.length; i++) {
+  for (var i = 0; i < names.length; i++) {
+    ctx.fillStyle = TEXT_COLOR;
+    ctx.fillText(names[i], TEXT_X + GAP + BAR_X * i, TEXT_NAME_Y); // Имя игрока
 
-    ctx.fillStyle = '#000';
-    ctx.fillText(players[i], CLOUD_X + GAP_X - GAP + (GAP_X + BAR_WIDTH) * i, TEXT_GAP);
-
-    var barHeight = (BAR_HEIGHT * times[i]) / maxTime;
-
-    if (players[i] === 'Вы') {
+    // Цвет гистаргаммы
+    if (names[i] === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
       ctx.fillStyle = 'hsl(210, ' + Math.floor(Math.random() * 101) + '%, 50%)';
     }
 
-    ctx.fillRect(CLOUD_X + GAP_X - GAP + (GAP_X + BAR_WIDTH) * i, GAP_Y, BAR_WIDTH, barHeight);
+    var barHeight = (-BAR_HEIGHT * times[i]) / getMaxTime(); // Расчет высоты гистограммы
 
-    ctx.fillStyle = '#000';
-    ctx.fillText(Math.round(times[i]), CLOUD_X + GAP_X - GAP + (GAP_X + BAR_WIDTH) * i, barHeight + (CLOUD_HEIGHT - GAP_X));
-  }
+    ctx.fillRect(CLOUD_X + BAR_GAP - GAP + BAR_X * i, BAR_Y, BAR_WIDTH, barHeight); // Высота гистограммы
+
+    ctx.fillStyle = TEXT_COLOR;
+    ctx.fillText(Math.round(times[i]), TEXT_X + GAP + BAR_X * i, barHeight + (CLOUD_HEIGHT - BAR_GAP)); // Время игрока
+  };
 };

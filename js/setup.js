@@ -1,42 +1,43 @@
 'use strict';
 
-var numberWizard = 4;
+// 4. УЧЕБНЫЙ ПРОЕКТ: НАС ОРДА
 
-var userDialog = document.querySelector('.setup');
+var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
+var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
+var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+var WIZARD_NUMBER = 4; // Количество волшебников
+
+var getRandomElement = function (arr) {
+  return Math.floor(Math.random() * arr.length);
+};
+
+// Генерация случайных данных волшебника
+var createWizard = function (value) {
+  var wizard = [];
+
+  for (var i = 0; i < value; i++) {
+    var nameWizard = getRandomElement(WIZARD_NAMES);
+    var surnameWizard = getRandomElement(WIZARD_SURNAMES);
+    var colorCoat = getRandomElement(COAT_COLORS);
+    var colorEyes = getRandomElement(EYES_COLORS);
+
+    wizard.push({
+      name: WIZARD_NAMES[nameWizard] + ' ' + WIZARD_SURNAMES[surnameWizard],
+      coatColor: COAT_COLORS[colorCoat],
+      eyesColor: EYES_COLORS[colorEyes]
+    });
+  }
+  console.log(wizard);
+  return wizard;
+};
 
 var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template')
   .content
   .querySelector('.setup-similar-item');
 
-var WIZARD_NAME = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-var WIZARD_SURNAME = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var COAT_COLOR = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
-
-var getRandomElement = function (arr) {
-  return Math.floor(Math.random() * arr.length);
-};
-
-var createWizard = function (value) {
-  var wizard = [];
-
-  for (var i = 0; i < value; i++) {
-    var nameWizard = getRandomElement(WIZARD_NAME);
-    var surnameWizard = getRandomElement(WIZARD_SURNAME);
-    var colorCoat = getRandomElement(COAT_COLOR);
-    var colorEyes = getRandomElement(EYES_COLOR);
-
-    wizard.push({
-      name: WIZARD_NAME[nameWizard] + ' ' + WIZARD_SURNAME[surnameWizard],
-      coatColor: COAT_COLOR[colorCoat],
-      eyesColor: EYES_COLOR[colorEyes]
-    });
-  }
-
-  return wizard;
-};
-
+// Генерация волшебника в шаблоне
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
 
@@ -47,9 +48,9 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
-var wizards = createWizard(numberWizard);
+var wizards = createWizard(WIZARD_NUMBER);
 
-
+// Генерация DOM-елемента
 var createFragment = function (arr) {
   var fragment = document.createDocumentFragment();
 
@@ -61,9 +62,9 @@ var createFragment = function (arr) {
 
 createFragment(wizards);
 
-userDialog.querySelector('.setup-similar').classList.remove('hidden');
+document.querySelector('.setup-similar').classList.remove('hidden');
 
-// Работа с событиями
+// 7. УЧЕБНЫЙ ПРОЕКТ: ОДЕТЬ НАДЕЖДУ
 
 var setup = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
@@ -128,9 +129,9 @@ userNameInput.addEventListener('invalid', function (evt) {
   }
 });
 
-var WIZARD_COAT = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+var WIZARD_COATS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var WIZARD_EYES = ['black', 'red', 'blue', 'yellow', 'green'];
-var WIZARD_FIREBALL = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+var WIZARD_FIREBALLS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
 var getRandomColor = function (color) {
   var randomColor = color[getRandomElement(color)];
@@ -145,7 +146,7 @@ var fireballColor = document.querySelector('.setup-fireball-wrap');
 wizardColorCoat.addEventListener('click', function (evt) {
   evt.preventDefault();
 
-  var randomCoat = getRandomColor(WIZARD_COAT);
+  var randomCoat = getRandomColor(WIZARD_COATS);
 
   wizardColorCoat.style.fill = randomCoat;
   setupWizardAppearance.querySelector('.input-coat').value = randomCoat;
@@ -163,7 +164,7 @@ wizardColorEyes.addEventListener('click', function (evt) {
 fireballColor.addEventListener('click', function (evt) {
   evt.preventDefault();
 
-  var randomFireball = getRandomColor(WIZARD_FIREBALL);
+  var randomFireball = getRandomColor(WIZARD_FIREBALLS);
 
   fireballColor.style.background = randomFireball;
   fireballColor.querySelector('.input-fireball').value = randomFireball;
